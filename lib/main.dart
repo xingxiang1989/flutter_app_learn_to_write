@@ -1,0 +1,206 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarBrightness:Brightness.light,
+      statusBarIconBrightness: Brightness.dark
+
+  ));
+  runApp(MyApp());
+
+}
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    
+
+    
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        primarySwatch: Colors.blue,
+        // This makes the visual density adapt to the platform that you run
+        // the app on. For desktop platforms, the controls will be smaller and
+        // closer together (more dense) than on mobile platforms.
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
+    return Scaffold(
+        body: new ListView(children: [
+      _ImageSelection(),
+      _titleSectionWidget(),
+      _ButtonGroupSelection(),
+      _ContentSelection()
+    ]));
+  }
+}
+
+class _titleSectionWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      padding: EdgeInsets.all(10.0),
+      margin: EdgeInsets.only(top: 0.0),
+      color: Colors.green,
+      child: new Row(
+        children: [
+          new Expanded(
+              child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              new Text(
+                'Oeschinen Lake Campground',
+                style: new TextStyle(fontSize: 18.0, color: Colors.lightBlue),
+              ),
+              new Text(
+                "learn to write",
+                style: new TextStyle(
+                    fontSize: 18.0, color: Colors.deepPurpleAccent),
+              )
+            ],
+          )),
+          new Icon(Icons.star, color: Colors.red, size: 20.0),
+          new Text(
+            "41",
+            style: new TextStyle(fontSize: 16.0, color: Colors.red),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _ButtonGroupSelection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      decoration: BoxDecoration(
+        color: Colors.yellow,
+        borderRadius: BorderRadius.all(Radius.circular(18.0))
+            
+      ),
+      padding: EdgeInsets.only(bottom: 10.0),
+      child: new Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _GetButtonColumn(Icons.call, 'CALL'),
+          _GetButtonColumn(Icons.near_me, 'ROUTE'),
+          _GetButtonColumn(Icons.share, 'SHARE'),
+        ],
+      ),
+    );
+  }
+}
+
+class _GetButtonColumn extends StatelessWidget {
+  IconData iconData;
+  String label;
+  Color color;
+
+  _GetButtonColumn(this.iconData, this.label) {
+    color = Colors.lightBlue;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      child: new Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          new Icon(iconData, color: color, size: 20.0),
+          new Text(
+            label,
+            style: new TextStyle(color: color, fontSize: 18.0),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class _ContentSelection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+        padding: EdgeInsets.all(32.0),
+        color: Colors.lime,
+        child: new Text(
+          "四列元素中的三个现在已经完成，只剩下图像部分。该图片可以在Creative Commons许可下在线获得， 但是它非常大，且下载缓慢。在步骤0中，您已经将该图像包含在项目中并更新了pubspec文件，所以现在可以从代码中直接引用它：",
+          style: new TextStyle(fontSize: 16.0, color: Colors.black),
+          softWrap: true,
+        ));
+  }
+}
+
+class _ImageSelection extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//    return new ConstrainedBox(
+//        constraints: BoxConstraints.expand(),
+//        child: new Image.asset("images/lake.jpg", fit: BoxFit.fill, height:
+//        300.0,));
+//  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Image.asset('images/lake.jpg', fit: BoxFit.cover, height: 300.0);
+  }
+}
