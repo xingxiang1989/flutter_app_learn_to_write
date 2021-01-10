@@ -82,16 +82,19 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-        body: new ListView(children: [
-      // _ImageSelection(),
-      // _FlexSelection(),
-      //     _coverDescriptionSection(),
-          _settingSection(),
-      // _titleSectionWidget(),
-      // _ButtonGroupSelection(),
-      // _ContentSelection()
-    ]));
+    // return Scaffold(
+    //     body: new ListView(children: [
+    //   // _ImageSelection(),
+    //   // _FlexSelection(),
+    //   //     _coverDescriptionSection(),
+    //   //     _settingSection(),
+    //   // _titleSectionWidget(),
+    //   // _ButtonGroupSelection(),
+    //   // _ContentSelection(),
+    //   //     _fullScreenSection(),
+    // ]));
+
+    return _fullScreenSection();
   }
 }
 
@@ -339,3 +342,23 @@ class _settingSection extends StatelessWidget {
         ));
   }
 }
+
+///全屏的壁纸效果，例如设置背景图
+class _fullScreenSection extends StatelessWidget{
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints.expand(),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage("https://ss3.bdstatic"
+              ".com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=226419046,487093019&fm=26&gp=0.jpg"),
+          fit: BoxFit.fill
+        )
+      ),
+      child: Text("hello world"),
+    );
+  }
+}
+
