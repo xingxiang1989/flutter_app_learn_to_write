@@ -84,7 +84,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
         body: new ListView(children: [
-      _ImageSelection(),
+      // _ImageSelection(),
+      // _FlexSelection(),
+          _coverDescriptionSection(),
       _titleSectionWidget(),
       _ButtonGroupSelection(),
       _ContentSelection()
@@ -98,7 +100,7 @@ class _titleSectionWidget extends StatelessWidget {
     return new Container(
       padding: EdgeInsets.all(10.0),
       margin: EdgeInsets.only(top: 0.0),
-      color: Colors.green,
+      color: Colors.grey,
       child: new Row(
         children: [
           new Expanded(
@@ -202,5 +204,76 @@ class _ImageSelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Image.asset('images/lake.jpg', fit: BoxFit.cover, height: 300.0);
+  }
+}
+
+///弹性布局的实践，一般以后会采用Row，cloumn
+class _FlexSelection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    const bgColor = const[Colors.blue,Colors.red,Colors.green];
+    return Container(
+      child: Flex(
+        direction: Axis.horizontal,
+        children: List<Widget>.generate(3, (index) =>
+            Container(
+              width: 100,
+              height: 100,
+              color: bgColor[index],
+            )),
+      ),
+    );
+  }
+}
+
+///给图片设置成圆角，并为其底部添加半透明浮层和文字介绍
+class _coverDescriptionSection extends StatelessWidget{
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Stack(
+        children: [
+          Container(
+            margin: EdgeInsets.all(20),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)) ,
+              child: FadeInImage.assetNetwork(
+                  placeholder: 'images/lake.jpg',
+                  image: "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fa4.att.hudong.com%2F27%2F67%2F01300000921826141299672233506.jpg&refer=http%3A%2F%2Fa4.att.hudong.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1612833279&t=0d184c525120a5d6b3a643be503fb7a2",
+                  fit:BoxFit.cover),
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            left: 20,
+            right: 20,
+            child: Container(
+              height: 60,
+              padding: EdgeInsets.only(left:10.0,top: 0.0,right:0.0,bottom: 0.0),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  "这是一只狗",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(0, 0, 0, 0.5),
+                borderRadius: BorderRadius.only(
+                    topLeft:Radius.zero,
+                    topRight:Radius.zero,
+                    bottomLeft:Radius.circular(10.0),
+                    bottomRight: Radius.circular(10.0))
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
