@@ -86,10 +86,11 @@ class _MyHomePageState extends State<MyHomePage> {
         body: new ListView(children: [
       // _ImageSelection(),
       // _FlexSelection(),
-          _coverDescriptionSection(),
-      _titleSectionWidget(),
-      _ButtonGroupSelection(),
-      _ContentSelection()
+      //     _coverDescriptionSection(),
+          _settingSection(),
+      // _titleSectionWidget(),
+      // _ButtonGroupSelection(),
+      // _ContentSelection()
     ]));
   }
 }
@@ -236,7 +237,7 @@ class _coverDescriptionSection extends StatelessWidget{
       child: Stack(
         children: [
           Container(
-            margin: EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
             child: ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(10.0)) ,
               child: FadeInImage.assetNetwork(
@@ -275,5 +276,66 @@ class _coverDescriptionSection extends StatelessWidget{
         ],
       ),
     );
+  }
+}
+
+///设置页面的练习，真实模仿item行
+class _settingSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Colors.grey[200],
+        child: Column(
+          children: [
+            Container(
+              height: 80,
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Icon(Icons.wifi, color: Colors.blue),
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("网络和互联网", style: TextStyle(fontSize: 16)),
+                        Text(
+                          "wlan连接和移动网络,wlan连接和移动网络,wlan连接和移动网络,wlan连接和移动网络",
+                          style:
+                              TextStyle(fontSize: 14, color: Colors.grey[800]),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(Icons.arrow_forward, color: Colors.blue)
+                ],
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              height: 80,
+              margin: const EdgeInsets.only(top:16),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("设置1"),
+                  Checkbox(
+                    value:false,
+                    onChanged: (val){
+
+                    },)
+
+                ],
+              ),
+            )
+          ],
+        ));
   }
 }
