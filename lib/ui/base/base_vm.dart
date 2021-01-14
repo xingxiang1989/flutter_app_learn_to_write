@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutterapplearntowrite/base/vm_s_contract.dart';
+import 'package:flutterapplearntowrite/ui/base/vm_s_contract.dart';
 
 abstract class BaseVM {
   final BuildContext _context;

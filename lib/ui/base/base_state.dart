@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapplearntowrite/base/vm_s_contract.dart';
+import 'package:flutterapplearntowrite/ui/base/vm_s_contract.dart';
 
 import 'base_vm.dart';
 import 'base_widget.dart';
