@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapplearntowrite/ui/base/base_page.dart';
 import 'package:flutterapplearntowrite/ui/base/base_state.dart';
 import 'package:flutterapplearntowrite/ui/login/login_vm.dart';
+import 'package:flutterapplearntowrite/util/LogUtils.dart';
 
 class LoginPage extends BasePage<_LoginPageState> {
 
@@ -11,6 +12,7 @@ class LoginPage extends BasePage<_LoginPageState> {
 
 class _LoginPageState extends BaseState<LoginVM, LoginPage> with WidgetsBindingObserver{
 
+  static const String TAG = "_LoginPageState";
   final _userNameController = TextEditingController();
   final _passWordController = TextEditingController();
 
@@ -19,7 +21,7 @@ class _LoginPageState extends BaseState<LoginVM, LoginPage> with WidgetsBindingO
   @override
   void initState() {
     super.initState();
-    print("loginPage initState ----->");
+    LogUtils.e(TAG, "initState ----->");
     WidgetsBinding.instance.addObserver(this);
   }
 
