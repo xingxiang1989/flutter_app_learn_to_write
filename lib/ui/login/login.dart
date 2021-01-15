@@ -41,6 +41,7 @@ class _LoginPageState extends BaseState<LoginVM, LoginPage> with WidgetsBindingO
 
   @override
   Widget createContentWidget() {
+    vm.callLoginCode(_lastLifecycleState);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

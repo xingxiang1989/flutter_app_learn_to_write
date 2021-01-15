@@ -58,6 +58,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   void initState() {
+    super.initState();
     _timer = Timer(const Duration(milliseconds: 500), (){
       _goToLogin();
     });
@@ -67,6 +68,6 @@ class _WelcomePageState extends State<WelcomePage> {
   void dispose() {
     _timer.cancel();
     _timer = null;
-
+    super.dispose();
   }
 }
