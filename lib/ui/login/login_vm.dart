@@ -15,14 +15,19 @@ class LoginVM extends BaseVM{
   LoginVM(BuildContext context) : super(context);
   @override
   void init() {
-
+    showLoading(false);
+    loadingShowContent(true);
   }
 
   ///MethodChannel 不太理解，
   callLoginCode(AppLifecycleState state) async {
+    print("loginPage callLoginCode state---> $state");
+
     if(state == AppLifecycleState.resumed){
       final platform = const MethodChannel(METHOD_CHANNEL_NAME);
       final code = await platform.invokeMethod(CALL_LOGIN_CODE);
+      print("loginPage callLoginCode code = $code---> ");
+
       if (code != null) {
         _getAccessTokenFromCode(code);
       }
@@ -30,6 +35,8 @@ class LoginVM extends BaseVM{
   }
 
   void _getAccessTokenFromCode(code) async{
+    print("loginPage _getAccessTokenFromCode ---> ");
+
     showLoading(true);
     try{
       Dio dio = new Dio();

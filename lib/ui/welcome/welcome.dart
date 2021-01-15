@@ -19,6 +19,7 @@ class _WelcomePageState extends State<WelcomePage> {
   Timer _timer;
 
   void _goToLogin() async{
+    print("welcomePage _goToLogin ---> ");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String authorization = prefs.getString(SP_AUTHORIZATION);
     String token = prefs.getString(SP_ACCESS_TOKEN);
@@ -59,7 +60,7 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer(const Duration(milliseconds: 500), (){
+    _timer = Timer(const Duration(milliseconds: 1500), (){
       _goToLogin();
     });
   }

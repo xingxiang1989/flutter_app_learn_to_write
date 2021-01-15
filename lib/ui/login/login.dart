@@ -19,12 +19,13 @@ class _LoginPageState extends BaseState<LoginVM, LoginPage> with WidgetsBindingO
   @override
   void initState() {
     super.initState();
+    print("loginPage initState ----->");
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    print("didChangeAppLifecycleState ");
+    print("loginPage didChangeAppLifecycleState state = $state ----->");
     setState(() {
       _lastLifecycleState = state;
     });
@@ -45,7 +46,7 @@ class _LoginPageState extends BaseState<LoginVM, LoginPage> with WidgetsBindingO
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset("images/app_welcom.png", width: 100, height: 100,),
+        Image.asset("images/app_welcome.png", width: 100, height: 100,),
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: Text("Sign in GitHub",
