@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapplearntowrite/routes/app_routes.dart';
+import 'package:flutterapplearntowrite/ui/home/home.dart';
 import 'package:flutterapplearntowrite/ui/login/login.dart';
 import 'package:flutterapplearntowrite/ui/welcome/welcome.dart';
+import 'package:flutterapplearntowrite/ui/home/home.dart';
 
 ///自带的路由，进行初始化和配置，还要学习第三方框架
 class GithubApp extends StatefulWidget {
@@ -16,8 +18,9 @@ class _GithubAppState extends State<GithubApp> {
       title: "Flutter Github App",
       initialRoute: welcomeRoute.routeName,
       routes: {
-        welcomeRoute.routeName:(context)=> WelcomePage(),
-        loginRoute.routeName:(BuildContext context)=> LoginPage()
+        welcomeRoute.routeName: (context) => WelcomePage(),
+        loginRoute.routeName: (BuildContext context) => LoginPage(),
+        homeRoute.routeName: (BuildContext context) => HomePage(),
       },
     );
   }
