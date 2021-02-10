@@ -5,12 +5,14 @@ import 'package:flutterapplearntowrite/common/constants.dart';
 import 'package:flutterapplearntowrite/http/http.dart';
 import 'package:flutterapplearntowrite/model/user_model.dart';
 import 'package:flutterapplearntowrite/ui/base/base_vm.dart';
+import 'package:flutterapplearntowrite/util/LogUtils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
 class LoginVM extends BaseVM {
+  String TAG = "LoginVM";
   String userName = "";
   String passWord = "";
 
@@ -89,6 +91,7 @@ class LoginVM extends BaseVM {
 
   authorization() async {
     FocusScope.of(context).requestFocus(FocusNode());
+    LogUtils.d(TAG, "URL_AUTHORIZATION =" + URL_AUTHORIZATION);
     if (await canLaunch(URL_AUTHORIZATION)) {
       // 为设置forceSafariVC，IOS 默认会打开APP内部WebView
       // 而APP内部WebView不支持重定向跳转到APP
