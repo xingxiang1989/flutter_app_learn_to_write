@@ -1,5 +1,6 @@
 package com.example.flutterapplearntowrite
 
+import android.text.TextUtils
 import android.util.Log
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
@@ -11,8 +12,12 @@ import io.flutter.plugin.common.MethodChannel
 object CustomFlutterPlugins {
     //这里必选要跟Flutter平台名称对应上，否则无法接收消息
     private val LOG_CHANNEL_NAME = "android_log"
+    const val CALL_LOGIN_CODE = "getLoginCode"
 
-    public fun registerLogger(messenger: BinaryMessenger?) {
+
+
+
+    fun registerLogger(messenger: BinaryMessenger?) {
         MethodChannel(messenger, LOG_CHANNEL_NAME).setMethodCallHandler { methodCall, result ->
             val tag: String = methodCall.argument("tag") ?: ""
             val msg: String = methodCall.argument("msg") ?: ""

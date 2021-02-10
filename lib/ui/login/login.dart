@@ -26,13 +26,13 @@ class _LoginPageState extends BaseState<LoginVM, LoginPage>
   @override
   void initState() {
     super.initState();
-    LogUtils.e(TAG, "initState ----->");
+    LogUtils.d(TAG, "initState ----->");
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    print("loginPage didChangeAppLifecycleState state = $state ----->");
+    LogUtils.d(TAG, "loginPage didChangeAppLifecycleState state = $state ----->");
     setState(() {
       _lastLifecycleState = state;
     });
@@ -143,7 +143,7 @@ class _LoginPageState extends BaseState<LoginVM, LoginPage>
                 ),
                 controller: _passWordController,
                 onChanged: (String content) => setState(() {
-                  print("password = $content");
+                  LogUtils.d(TAG, "password = $content");
                   vm.passWord = content;
                 }),
                 textInputAction: TextInputAction.next,
@@ -162,7 +162,7 @@ class _LoginPageState extends BaseState<LoginVM, LoginPage>
                 colorBrightness: Brightness.dark,
                 splashColor: Colors.grey,
                 onPressed: () {
-                  print("sign in");
+                  LogUtils.d(TAG, "onPressed sign in");
                 },
                 shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
@@ -184,7 +184,8 @@ class _LoginPageState extends BaseState<LoginVM, LoginPage>
                 colorBrightness: Brightness.dark,
                 splashColor: Colors.grey,
                 onPressed: () {
-                  print("authrize");
+                  LogUtils.d(TAG, "onPressed authrize");
+                  vm.authorization();
                 },
                 shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),

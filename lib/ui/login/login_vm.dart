@@ -7,12 +7,15 @@ import 'package:flutterapplearntowrite/model/user_model.dart';
 import 'package:flutterapplearntowrite/ui/base/base_vm.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-class LoginVM extends BaseVM{
+import 'package:url_launcher/url_launcher.dart';
 
+
+class LoginVM extends BaseVM {
   String userName = "";
   String passWord = "";
 
   LoginVM(BuildContext context) : super(context);
+
   @override
   void init() {
     showLoading(false);
@@ -23,7 +26,7 @@ class LoginVM extends BaseVM{
   callLoginCode(AppLifecycleState state) async {
     print("loginPage callLoginCode state---> $state");
 
-    if(state == AppLifecycleState.resumed){
+    if (state == AppLifecycleState.resumed) {
       final platform = const MethodChannel(METHOD_CHANNEL_NAME);
       final code = await platform.invokeMethod(CALL_LOGIN_CODE);
       print("loginPage callLoginCode code = $code---> ");
@@ -34,11 +37,11 @@ class LoginVM extends BaseVM{
     }
   }
 
-  void _getAccessTokenFromCode(code) async{
+  void _getAccessTokenFromCode(code) async {
     print("loginPage _getAccessTokenFromCode ---> ");
 
     showLoading(true);
-    try{
+    try {
       Dio dio = new Dio();
       dio.options.baseUrl = GITHUB_BASE_URL;
       dio.options.connectTimeout = 5000;
@@ -57,21 +60,18 @@ class LoginVM extends BaseVM{
       await prefs.setString(SP_ACCESS_TOKEN, token);
       await prefs.setString(SP_AUTHORIZATION, '');
       _getUser();
-    }on DioError catch (e) {
+    } on DioError catch (e) {
       showLoading(false);
       Fluttertoast.showToast(
-          msg: 'getAccessTokenFromCode DioError: ${e.message}'
-      );
-    } on Exception catch(e){
+          msg: 'getAccessTokenFromCode DioError: ${e.message}');
+    } on Exception catch (e) {
       showLoading(false);
-      Fluttertoast.showToast(
-          msg: "getAccessTokenFromCode IOError: $e"
-      );
+      Fluttertoast.showToast(msg: "getAccessTokenFromCode IOError: $e");
     }
   }
 
   ///获取个人信息
-  _getUser() async{
+  _getUser() async {
     showLoading(true);
     try {
       Response response = await dio.get('/user');
@@ -84,6 +84,17 @@ class LoginVM extends BaseVM{
       showLoading(false);
       // clearUserInfo();
       Fluttertoast.showToast(msg: 'getUser error: ${e.message}');
+    }
+  }
+
+  authorization() async {
+    FocusScope.of(context).requestFocus(FocusNode());
+    if (await canLaunch(URL_AUTHORIZATION)) {
+      // 为设置forceSafariVC，IOS 默认会打开APP内部WebView
+      // 而APP内部WebView不支持重定向跳转到APP
+      await launch(URL_AUTHORIZATION, forceSafariVC: false);
+    } else {
+      throw 'Can not launch $URL_AUTHORIZATION)';
     }
   }
 }
