@@ -1,13 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapplearntowrite/ui/base/base_page.dart';
+import 'package:flutterapplearntowrite/ui/base/base_state.dart';
+import 'package:flutterapplearntowrite/ui/home/search/search_wm.dart';
 
-class SearchPage extends StatefulWidget {
+class SearchTabPage extends BasePage {
+
+
   @override
-  _SearchPageState createState() => _SearchPageState();
+  _SearchTabPageState createBaseState() => _SearchTabPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _SearchTabPageState extends BaseState<SearchVM, SearchTabPage>{
+
+
   @override
-  Widget build(BuildContext context) {
-    return Container();
+  SearchVM createVM() {
+
+  }
+
+  @override
+  Widget createContentWidget() {
+
   }
 }

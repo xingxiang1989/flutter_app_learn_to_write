@@ -14,7 +14,7 @@ class _HomePageState extends State<HomePage> {
   int _selectIndex = 0;
 
   List<Widget> _tabs = <Widget>[
-    SearchPage(),
+    SearchTabPage(),
     NotificationPage(),
     UserPage()
   ];
