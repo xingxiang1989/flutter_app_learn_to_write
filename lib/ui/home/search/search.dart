@@ -31,9 +31,13 @@ class _SearchTabPageState extends BaseState<SearchVM, SearchTabPage> {
             return RepositoryItemView(model?.items[index]);
           },
           separatorBuilder: (BuildContext context, int index) {
-            return Divider(
-              height: 1,
-              color: Colors.grey,
+            return Padding(
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15, top: 15),
+              child: Divider(
+                height: 1,
+                color: Colors.grey,
+              ),
             );
           },
           itemCount: model?.items?.length ?? 0);
@@ -65,7 +69,7 @@ class _SearchTabPageState extends BaseState<SearchVM, SearchTabPage> {
       children: [
         SizedBox(
             width: double.infinity,
-            height: 100,
+            height: 50,
             child: Container(
               color: Colors.blue,
               child: Row(
