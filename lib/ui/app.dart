@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapplearntowrite/routes/app_routes.dart';
+import 'package:flutterapplearntowrite/ui/count/count.dart';
 import 'package:flutterapplearntowrite/ui/home/home.dart';
 import 'package:flutterapplearntowrite/ui/login/login.dart';
 import 'package:flutterapplearntowrite/ui/welcome/welcome.dart';
@@ -21,6 +22,7 @@ class _GithubAppState extends State<GithubApp> {
         welcomeRoute.routeName: (context) => WelcomePage(),
         loginRoute.routeName: (BuildContext context) => LoginPage(),
         homeRoute.routeName: (BuildContext context) => HomePage(),
+        countPageRoute.routeName:(BuildContext context) => CountPage(),
       },
     );
   }

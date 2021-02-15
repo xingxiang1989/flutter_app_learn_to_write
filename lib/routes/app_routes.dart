@@ -17,6 +17,8 @@ const AppRoutes loginRoute = AppRoutes('/login');
 
 const AppRoutes homeRoute = AppRoutes('/home');
 
+const AppRoutes countPageRoute = AppRoutes('/countPage');
+
 const AppRoutes repositoryRoute =
     AppRoutes('/repository', pageTitle: 'repository');
 

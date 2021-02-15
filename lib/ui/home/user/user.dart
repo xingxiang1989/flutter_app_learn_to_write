@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapplearntowrite/routes/app_routes.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class UserPage extends StatefulWidget {
@@ -30,8 +31,9 @@ class _UserPageState extends State<UserPage> {
         Row(
          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _getLabel(3, "Repos",(){
-              Fluttertoast.showToast(msg: "Repos");
+            _getLabel(3, "inherit",(){
+              Navigator.pushNamed(context, countPageRoute.routeName);
+
             }),
             _getLabel(1, "Followers",(){
               Fluttertoast.showToast(msg: "Followers");
