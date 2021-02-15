@@ -13,6 +13,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class WelcomePage extends StatefulWidget {
   @override
   _WelcomePageState createState() => _WelcomePageState();
+
+  ///参考StatefulWidget 系统文档
+  const WelcomePage({Key key, this.color = const Color(0xFFFFE306), this.child})
+      : super(key: key);
+
+  final Color color;
+  final Widget child;
 }
 
 class _WelcomePageState extends State<WelcomePage> {
@@ -39,6 +46,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) {
+    LogUtils.d(TAG, "build  ---->");
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
@@ -66,6 +74,7 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   void initState() {
     super.initState();
+    LogUtils.d(TAG, "initState  ---->");
     _timer = Timer(const Duration(milliseconds: 1500), () {
       _goToLogin();
     });
@@ -73,8 +82,26 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   void dispose() {
+    LogUtils.d(TAG, "dispose  ---->");
+
     _timer.cancel();
     _timer = null;
     super.dispose();
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    LogUtils.d(TAG, "didChangeDependencies  ---->");
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    LogUtils.d(TAG, "deactivate  ---->");
+
+  }
+
+
+
 }
