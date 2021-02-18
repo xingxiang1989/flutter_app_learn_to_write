@@ -72,7 +72,7 @@ abstract class BaseState<VM extends BaseVM, T extends StatefulWidget>
   Widget build(BuildContext context) {
     return Scaffold(
       //防止因键盘弹出造成bottom overlowed by X pixels
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: createAppBar(),
       body: BaseWidget(
         contentWidget: createContentWidget(),
