@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapplearntowrite/routes/app_routes.dart';
+import 'package:flutterapplearntowrite/routes/application.dart';
+import 'package:flutterapplearntowrite/routes/routes.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class UserPage extends StatefulWidget {
@@ -32,7 +34,7 @@ class _UserPageState extends State<UserPage> {
          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _getLabel(3, "inherit",(){
-              Navigator.pushNamed(context, countPageRoute.routeName);
+              Application.router.navigateTo(context, Routes.countPage);
 
             }),
             _getLabel(1, "Followers",(){

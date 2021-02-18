@@ -1,3 +1,4 @@
+///系统提供的写法，准备放弃这种写法，使用fluro
 class AppRoutes {
   final String routeName;
   final String pageTitle;

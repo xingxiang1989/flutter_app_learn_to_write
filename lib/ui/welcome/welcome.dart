@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutterapplearntowrite/common/constants.dart';
 import 'package:flutterapplearntowrite/routes/app_routes.dart';
+import 'package:flutterapplearntowrite/routes/application.dart';
+import 'package:flutterapplearntowrite/routes/routes.dart';
 import 'package:flutterapplearntowrite/util/LogUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,10 +39,10 @@ class _WelcomePageState extends State<WelcomePage> {
     if ((authorization != null && authorization.isNotEmpty) ||
         (token != null && token.isNotEmpty)) {
       LogUtils.d(TAG, "_goToLogin homeRoute");
-      Navigator.pushReplacementNamed(context, homeRoute.routeName);
+      Application.router.navigateTo(context, Routes.home);
     } else {
       LogUtils.d(TAG, "_goToLogin loginRoute");
-      Navigator.pushReplacementNamed(context, loginRoute.routeName);
+      Application.router.navigateTo(context, Routes.login);
     }
   }
 

@@ -1,5 +1,8 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapplearntowrite/routes/app_routes.dart';
+import 'package:flutterapplearntowrite/routes/application.dart';
+import 'package:flutterapplearntowrite/routes/routes.dart';
 import 'package:flutterapplearntowrite/ui/count/count.dart';
 import 'package:flutterapplearntowrite/ui/home/home.dart';
 import 'package:flutterapplearntowrite/ui/login/login.dart';
@@ -13,17 +16,27 @@ class GithubApp extends StatefulWidget {
 }
 
 class _GithubAppState extends State<GithubApp> {
+
+  _GithubAppState(){
+    final router = FluroRouter();
+    Routes.configureRoutes(router);
+    Application.router = router;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Flutter Github App",
-      initialRoute: welcomeRoute.routeName,
-      routes: {
-        welcomeRoute.routeName: (context) => WelcomePage(),
-        loginRoute.routeName: (BuildContext context) => LoginPage(),
-        homeRoute.routeName: (BuildContext context) => HomePage(),
-        countPageRoute.routeName:(BuildContext context) => CountPage(),
-      },
+      onGenerateRoute: Application.router.generator,
+
+      // initialRoute: welcomeRoute.routeName,
+      // routes: {
+      //   welcomeRoute.routeName: (context) => WelcomePage(),
+      //   loginRoute.routeName: (BuildContext context) => LoginPage(),
+      //   homeRoute.routeName: (BuildContext context) => HomePage(),
+      //   countPageRoute.routeName:(BuildContext context) => CountPage(),
+      // },
     );
   }
 }

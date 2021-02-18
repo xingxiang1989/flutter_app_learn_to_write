@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutterapplearntowrite/common/constants.dart';
 import 'package:flutterapplearntowrite/http/http.dart';
 import 'package:flutterapplearntowrite/model/user_model.dart';
+import 'package:flutterapplearntowrite/routes/application.dart';
+import 'package:flutterapplearntowrite/routes/routes.dart';
 import 'package:flutterapplearntowrite/ui/base/base_vm.dart';
 import 'package:flutterapplearntowrite/util/LogUtils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -82,7 +84,8 @@ class LoginVM extends BaseVM {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString(SP_USER_NAME, userModel.login);
       Fluttertoast.showToast(msg: 'login success! hi ${userModel.name}');
-      Navigator.of(context).pushReplacementNamed(homeRoute.routeName);
+      Application.router.navigateTo(context, Routes.home);
+
     } on DioError catch (e) {
       showLoading(false);
       // clearUserInfo();
