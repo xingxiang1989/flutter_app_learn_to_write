@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapplearntowrite/util/LogUtils.dart';
 import 'package:flutterapplearntowrite/widget/count_Inherited_widget.dart';
 import 'package:flutterapplearntowrite/widget/count_text.dart';
 ///InheritedWidget 是 Flutter 中的一个非常重要的功能组件，它能够提供数据在 widget 树中从上到下进行传递。
@@ -14,6 +15,7 @@ class _CountPageState extends State<CountPage> {
 
   @override
   Widget build(BuildContext context) {
+    LogUtils.d("CountPage", "Build--->");
     return MaterialApp(
       title: 'Count App',
       theme: new ThemeData(primarySwatch: Colors.blue),
@@ -30,7 +32,7 @@ class _CountPageState extends State<CountPage> {
                 CountText(),
                 RaisedButton(
                   onPressed: () => setState(() => count++),
-                  child: Text("Increment"),
+                  child: Text("Increment " + count.toString()),
                 )
               ],
             ),

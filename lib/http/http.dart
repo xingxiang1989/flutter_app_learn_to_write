@@ -9,7 +9,7 @@ const String GITHUB_BASE_URL = 'https://github.com';
 BaseOptions options = BaseOptions(
   baseUrl: API_GITHUB_BASE_URL,
   connectTimeout: 5000,
-  receiveTimeout: 3000,
+  receiveTimeout: 10000,
 );
 
 var dio = Dio(options)..interceptors.add(AppInterceptors());
