@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutterapplearntowrite/common/constants.dart';
+import 'package:flutterapplearntowrite/util/LogUtils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppInterceptors extends InterceptorsWrapper {
@@ -19,13 +20,15 @@ class AppInterceptors extends InterceptorsWrapper {
 
   @override
   Future onResponse(Response response) {
-    print('onResponse ${response.headers}');
+    LogUtils.e("AppInterceptors", 'onResponse ${response.headers}');
+    LogUtils.e("AppInterceptors", 'onResponse ${response.data}');
     return super.onResponse(response);
   }
 
   @override
   Future onError(DioError err) {
-    print('Network request onError ${err.request.uri}, ${err.message}');
+    LogUtils.e("AppInterceptors", 'Network request onError ${err.request
+        .uri}, ${err.message}');
     return super.onError(err);
   }
 }

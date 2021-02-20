@@ -8,7 +8,7 @@ const String GITHUB_BASE_URL = 'https://github.com';
 
 BaseOptions options = BaseOptions(
   baseUrl: API_GITHUB_BASE_URL,
-  connectTimeout: 5000,
+  connectTimeout: 10000,
   receiveTimeout: 10000,
 );
 
