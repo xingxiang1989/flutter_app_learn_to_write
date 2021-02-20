@@ -10,7 +10,8 @@ class CountText extends StatefulWidget {
 class _CountTextState extends State<CountText> {
   @override
   Widget build(BuildContext context) {
-    return Text("count = ${CountInheritedWidget.of(context).count.toString()}");
+    return Text("count = ${CountInheritedWidget.of(context).num.value
+        .toString()}");
   }
 
   @override

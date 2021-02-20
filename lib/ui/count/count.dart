@@ -11,7 +11,7 @@ class CountPage extends StatefulWidget {
 }
 
 class _CountPageState extends State<CountPage> {
-  int count = 0;
+  ValueNotifier<int> _num = new ValueNotifier(0);
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +25,22 @@ class _CountPageState extends State<CountPage> {
         ),
         body: Center(
           child: CountInheritedWidget(
-            count: count,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CountText(),
-                RaisedButton(
-                  onPressed: () => setState(() => count++),
-                  child: Text("Increment " + count.toString()),
-                )
-              ],
+            num: _num,
+            child: ValueListenableBuilder<int>(
+              valueListenable: _num,
+              builder: (BuildContext context, int value, Widget child) {
+                LogUtils.d("CountPage", "局部刷新--->");
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CountText(),
+                    RaisedButton(
+                      onPressed: () => _num.value ++,
+                      child: Text("Increment " + value.toString()),
+                    )
+                  ],
+                );
+              }
             ),
           ),
         ),

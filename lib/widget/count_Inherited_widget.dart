@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
 class CountInheritedWidget extends InheritedWidget {
-  const CountInheritedWidget({@required this.count, Key key, Widget child})
+  const CountInheritedWidget({@required this.num, Key key, Widget child})
       : super(key: key, child: child);
-  final int count;
+  final ValueNotifier<int> num;
 
   /// 统一的获取CountInheritedWidget实例, 方便树中子widget的获取共享数据
   /// 必须在State中调用才会有效
@@ -18,6 +18,6 @@ class CountInheritedWidget extends InheritedWidget {
 
   @override
   bool updateShouldNotify(CountInheritedWidget oldWidget) {
-    return oldWidget.count != count;
+    return oldWidget.num != num;
   }
 }
