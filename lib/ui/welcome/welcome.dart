@@ -33,16 +33,16 @@ class _WelcomePageState extends State<WelcomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String authorization = prefs.getString(SP_AUTHORIZATION);
     String token = prefs.getString(SP_ACCESS_TOKEN);
-    LogUtils.d(TAG, "_goToLogin authorization = " + authorization);
-    LogUtils.d(TAG, "_goToLogin token = " + token);
 
     if ((authorization != null && authorization.isNotEmpty) ||
         (token != null && token.isNotEmpty)) {
       LogUtils.d(TAG, "_goToLogin homeRoute");
-      Application.router.navigateTo(context, Routes.home);
+      LogUtils.d(TAG, "_goToLogin authorization = " + authorization);
+      LogUtils.d(TAG, "_goToLogin token = " + token);
+      Application.router.navigateTo(context, Routes.home,clearStack: true);
     } else {
       LogUtils.d(TAG, "_goToLogin loginRoute");
-      Application.router.navigateTo(context, Routes.login);
+      Application.router.navigateTo(context, Routes.login,clearStack: true);
     }
   }
 

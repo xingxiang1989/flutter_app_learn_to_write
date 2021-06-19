@@ -16,6 +16,7 @@ class Routes {
       return;
     });
 
+    debugPrint("configureRoutes ");
     router.define(root, handler: rootHandler);
     router.define(login, handler: loginHandler);
     router.define(home, handler: homeHandler);
