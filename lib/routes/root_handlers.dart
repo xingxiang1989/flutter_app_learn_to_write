@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapplearntowrite/ui/count/count.dart';
 import 'package:flutterapplearntowrite/ui/home/home.dart';
 import 'package:flutterapplearntowrite/ui/login/login.dart';
+import 'package:flutterapplearntowrite/ui/providertest/providettest.dart';
 import 'package:flutterapplearntowrite/ui/welcome/welcome.dart';
 
 var rootHandler = Handler(
@@ -24,3 +25,9 @@ var countPageHandler = Handler(
     handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   return CountPage();
 });
+
+var providerTestPageHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return ProviderTestPage();
+  }
+);

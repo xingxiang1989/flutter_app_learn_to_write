@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapplearntowrite/routes/application.dart';
+import 'package:flutterapplearntowrite/routes/routes.dart';
 import 'package:flutterapplearntowrite/widget/notification_item_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -15,7 +17,6 @@ class _NotificationPageState extends State<NotificationPage> {
     return Container(
       child: ListView.separated(
           itemCount: Datas.length,
-          // ignore: missing_return
           separatorBuilder:(BuildContext context, int index){
             return Divider(height: 1,color: Colors.black);
           },
@@ -30,5 +31,8 @@ class _NotificationPageState extends State<NotificationPage> {
   ///item 点击事件跳转
   _goPage(BuildContext context,String label){
     Fluttertoast.showToast(msg: label);
+    if(label == "provider"){
+      Application.router.navigateTo(context, Routes.providerTestPage);
+    }
   }
 }
