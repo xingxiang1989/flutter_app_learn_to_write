@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterapplearntowrite/ui/count/count.dart';
 import 'package:flutterapplearntowrite/ui/home/home.dart';
 import 'package:flutterapplearntowrite/ui/login/login.dart';
+import 'package:flutterapplearntowrite/ui/play/playvideo_page.dart';
 import 'package:flutterapplearntowrite/ui/providertest/providettest.dart';
 import 'package:flutterapplearntowrite/ui/welcome/welcome.dart';
 
@@ -30,4 +31,10 @@ var providerTestPageHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     return ProviderTestPage();
   }
+);
+
+var playVideoPageHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return PlayVideoPage();
+    }
 );

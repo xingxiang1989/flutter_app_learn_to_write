@@ -9,6 +9,7 @@ class Routes {
   static String home = "/home";
   static String countPage = "/countPage";
   static String providerTestPage = "/providerTest";
+  static String playVideoPage = "/playVideoPage";
 
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = Handler(handlerFunc:
@@ -23,5 +24,7 @@ class Routes {
     router.define(home, handler: homeHandler);
     router.define(countPage, handler: countPageHandler);
     router.define(providerTestPage, handler: providerTestPageHandler);
+    router.define(playVideoPage, handler: playVideoPageHandler);
+
   }
 }

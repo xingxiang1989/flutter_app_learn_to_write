@@ -11,7 +11,7 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  static const Datas = const ["provider", "aa", "bb"];
+  static const Datas = const ["provider", "play video", "bb"];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,6 +33,8 @@ class _NotificationPageState extends State<NotificationPage> {
     Fluttertoast.showToast(msg: label);
     if(label == "provider"){
       Application.router.navigateTo(context, Routes.providerTestPage);
+    }else if(label == "play video"){
+      Application.router.navigateTo(context, Routes.playVideoPage);
     }
   }
 }
