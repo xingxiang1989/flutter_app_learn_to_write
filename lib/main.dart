@@ -6,10 +6,10 @@ import 'package:flutterapplearntowrite/ui/app.dart';
 
 void main() {
 
-  debugPrint("dddd");
-  debugPrint = (String message, {int wrapWidth}) => debugPrintSynchronously(message, wrapWidth: wrapWidth);
-  debugPrintMarkNeedsLayoutStacks = true;
-  debugPrintMarkNeedsPaintStacks = true;
+  // debugPrint("dddd");
+  // debugPrint = (String message, {int wrapWidth}) => debugPrintSynchronously(message, wrapWidth: wrapWidth);
+  // debugPrintMarkNeedsLayoutStacks = true;
+  // debugPrintMarkNeedsPaintStacks = true;
   runApp(GithubApp());
 }
 
