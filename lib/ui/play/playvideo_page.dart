@@ -2,6 +2,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterapplearntowrite/ui/base2/base_page.dart';
 import 'package:flutterapplearntowrite/ui/base2/base_state.dart';
+import 'package:flutterapplearntowrite/util/LogUtils.dart';
 import 'package:flutterapplearntowrite/widget/myText.dart';
 import 'package:video_player/video_player.dart';
 
@@ -12,8 +13,10 @@ class PlayVideoPage extends BasePage {
 }
 
 class PlayVideoPageState extends BaseState<PlayVideoPage> {
+
+  String TAG = "PlayVideoPageState";
   VideoPlayerController _controller;
-  bool _isPlaying = false;
+  bool _initOk = false;
   double screenWidth, screenHeight;
 
   @override
@@ -24,12 +27,13 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
     _controller = VideoPlayerController.network(
         'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4')
       ..addListener(() {
-        print("isInitialized = ${_controller.value.isInitialized}");
-        if (_controller.value.isInitialized) {
-          print("初始化成功，开始自动播放");
+        LogUtils.d(TAG, "controller isInitialized = ${_controller.value.isInitialized} "
+            ", _initOk = $_initOk");
+        if (_controller.value.isInitialized && !_initOk) {
+          LogUtils.d(TAG,"初始化成功，开始自动播放");
           _controller.play();
           setState(() {
-            _isPlaying = true;
+            _initOk = true;
           });
         }
       })
@@ -56,7 +60,7 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
                     )
                   : Container(),
             ),
-            Visibility(visible: _isPlaying, child: loadingPage())
+            Visibility(visible: _initOk ? false : true , child: loadingPage())
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -83,14 +87,16 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
         color: Colors.white,
         child: Center(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               CircularProgressIndicator(),
               SizedBox(
                 height: 24,
               ),
-              MyText("初始化", color: Colors.black)
+              MyText("初始化...", color: Colors.black)
             ],
           ),
         ));
   }
+
 }
