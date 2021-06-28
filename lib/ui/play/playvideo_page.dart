@@ -1,8 +1,10 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapplearntowrite/color/YColors.dart';
 import 'package:flutterapplearntowrite/ui/base2/base_page.dart';
 import 'package:flutterapplearntowrite/ui/base2/base_state.dart';
 import 'package:flutterapplearntowrite/util/LogUtils.dart';
+import 'package:flutterapplearntowrite/widget/image_button.dart';
 import 'package:flutterapplearntowrite/widget/myText.dart';
 import 'package:video_player/video_player.dart';
 
@@ -13,24 +15,31 @@ class PlayVideoPage extends BasePage {
 }
 
 class PlayVideoPageState extends BaseState<PlayVideoPage> {
-
   String TAG = "PlayVideoPageState";
   VideoPlayerController _controller;
+  //是否初始化
   bool _initOk = false;
+  //是否在播放
+  bool _isPlaying = false;
   double screenWidth, screenHeight;
+  double aspectRatio = 1.6;
+  String urlMp4 ="https://sample-videos"
+      ".com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4";
 
   @override
   void onCreate() {
     screenWidth = ScreenUtil.getInstance().screenWidth;
     screenHeight = ScreenUtil.getInstance().screenHeight;
 
-    _controller = VideoPlayerController.network(
-        'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4')
+    _controller = VideoPlayerController.asset("videos/video.mp4")
       ..addListener(() {
-        LogUtils.d(TAG, "controller isInitialized = ${_controller.value.isInitialized} "
-            ", _initOk = $_initOk");
+        LogUtils.d(
+            TAG,
+            "controller isInitialized = ${_controller.value.isInitialized} "
+            ", _initOk = $_initOk, isBuffering = ${_controller.value
+                .isBuffering}, isplaying = ${_controller.value.isPlaying}");
         if (_controller.value.isInitialized && !_initOk) {
-          LogUtils.d(TAG,"初始化成功，开始自动播放");
+          LogUtils.d(TAG, "初始化成功，开始自动播放");
           _controller.play();
           setState(() {
             _initOk = true;
@@ -47,30 +56,23 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
 
   @override
   Widget pageBody(BuildContext context) {
+    LogUtils.d(TAG, "pageBody aspectRatio = ${_controller.value.aspectRatio}");
     return MaterialApp(
       title: 'Video Demo',
       home: Scaffold(
-        body: Stack(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Center(
-              child: _controller.value.isInitialized
-                  ? AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    )
-                  : Container(),
+            Stack(
+              children: [
+                AspectRatio(
+                  aspectRatio: aspectRatio,
+                  child: _initOk ? VideoPlayer(_controller) : loadingPage(),
+                ),
+                Visibility(child: operationView(), visible: _initOk,)
+              ],
             ),
-            Visibility(visible: _initOk ? false : true , child: loadingPage())
           ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              _controller.value.isPlaying
-                  ? _controller.pause()
-                  : _controller.play();
-            });
-          },
         ),
       ),
     );
@@ -84,7 +86,7 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
   Widget loadingPage() {
     return Container(
         width: screenWidth,
-        color: Colors.white,
+        color: Colors.yellow,
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -99,4 +101,30 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
         ));
   }
 
+  ///上层操作view
+  Widget operationView() {
+    return Container(
+      color: YColors.blue40,
+      child: AspectRatio(
+        aspectRatio: aspectRatio,
+        child: Visibility(
+          visible: _controller.value.isPlaying ? false : true,
+          child: Center(
+            child: SimpleImageButton(
+                normalImage: "images/videowindow_icon_play"
+                    ".png",
+                onPressed: () {
+                  setState(() {
+                    _controller.value.isPlaying
+                        ? _controller.pause()
+                        : _controller.play();
+                  });
+                },
+                width: ScreenUtil.getInstance().getWidth(53),
+                height: ScreenUtil.getInstance().getWidth(53)),
+          ),
+        ),
+      ),
+    );
+  }
 }
