@@ -28,6 +28,7 @@ class _GithubAppState extends State<GithubApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Flutter Github App",
+      debugShowCheckedModeBanner: false,
       onGenerateRoute: Application.router.generator,
 
       // initialRoute: welcomeRoute.routeName,

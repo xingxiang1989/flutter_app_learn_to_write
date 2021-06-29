@@ -24,7 +24,8 @@ class Routes {
     router.define(home, handler: homeHandler);
     router.define(countPage, handler: countPageHandler);
     router.define(providerTestPage, handler: providerTestPageHandler);
-    router.define(playVideoPage, handler: playVideoPageHandler);
+    router.define(playVideoPage, handler: playVideoPageHandler,
+        transitionType: TransitionType.none);
 
   }
 }

@@ -30,7 +30,7 @@ class _NotificationPageState extends State<NotificationPage> {
 
   ///item 点击事件跳转
   _goPage(BuildContext context,String label){
-    Fluttertoast.showToast(msg: label);
+    print("item click label = $label");
     if(label == "provider"){
       Application.router.navigateTo(context, Routes.providerTestPage);
     }else if(label == "play video"){

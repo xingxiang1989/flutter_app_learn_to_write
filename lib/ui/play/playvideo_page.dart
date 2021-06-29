@@ -6,6 +6,7 @@ import 'package:flutterapplearntowrite/ui/base2/base_state.dart';
 import 'package:flutterapplearntowrite/util/LogUtils.dart';
 import 'package:flutterapplearntowrite/widget/image_button.dart';
 import 'package:flutterapplearntowrite/widget/myText.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:video_player/video_player.dart';
 
 ///视频播放页面
@@ -60,19 +61,22 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
     return MaterialApp(
       title: 'Video Demo',
       home: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                AspectRatio(
-                  aspectRatio: aspectRatio,
-                  child: _initOk ? VideoPlayer(_controller) : loadingPage(),
-                ),
-                Visibility(child: operationView(), visible: _initOk,)
-              ],
-            ),
-          ],
+        body: Container(
+          margin: EdgeInsets.only(top:ScreenUtil.getInstance().statusBarHeight),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  AspectRatio(
+                    aspectRatio: aspectRatio,
+                    child: _initOk ? VideoPlayer(_controller) : loadingPage(),
+                  ),
+                  Visibility(child: operationView(), visible: _initOk,)
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -108,23 +112,49 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
       child: AspectRatio(
         aspectRatio: aspectRatio,
         child: Visibility(
-          visible: _controller.value.isPlaying ? false : true,
-          child: Center(
-            child: SimpleImageButton(
-                normalImage: "images/videowindow_icon_play"
-                    ".png",
-                onPressed: () {
-                  setState(() {
-                    _controller.value.isPlaying
-                        ? _controller.pause()
-                        : _controller.play();
-                  });
-                },
-                width: ScreenUtil.getInstance().getWidth(53),
-                height: ScreenUtil.getInstance().getWidth(53)),
+          visible: _controller.value.isPlaying,
+          child: Column(
+            children: [
+              topView()
+            ],
           ),
         ),
       ),
     );
+  }
+
+  Widget topView(){
+    return Container(
+      color: YColors.black40,
+      padding: EdgeInsets.only(left: ScreenUtil.getInstance().getWidth(15),
+          right: ScreenUtil.getInstance().getWidth(15)),
+      height: ScreenUtil.getInstance().getWidth(50),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SimpleImageButton(normalImage: "images/icon_white_back.png",
+              onPressed:
+          clickBack, width: ScreenUtil.getInstance().getWidth(24),
+              height: ScreenUtil.getInstance().getWidth(24)),
+          Text("C3WN",style: TextStyle(color: YColors.white,fontSize: 16),),
+          Spacer(),
+          SimpleImageButton(normalImage: "images/videowindow_icon_share.png",
+              onPressed:
+          clickShare, width: ScreenUtil.getInstance().getWidth(24),
+              height: ScreenUtil.getInstance().getWidth(24)),
+        ],
+      ),
+    );
+  }
+
+
+  ///点击back按钮
+  clickBack(){
+    finish();
+  }
+
+  ///分享按钮
+  clickShare(){
+    Fluttertoast.showToast(msg: "clickShare");
   }
 }
