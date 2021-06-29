@@ -115,7 +115,9 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
           visible: _controller.value.isPlaying,
           child: Column(
             children: [
-              topView()
+              toolbarView(),
+              Spacer(),
+              bottomPlayOpView()
             ],
           ),
         ),
@@ -123,7 +125,7 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
     );
   }
 
-  Widget topView(){
+  Widget toolbarView(){
     return Container(
       color: YColors.black40,
       padding: EdgeInsets.only(left: ScreenUtil.getInstance().getWidth(15),
@@ -147,6 +149,52 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
     );
   }
 
+  Widget bottomPlayOpView(){
+    return Container(
+      padding: EdgeInsets.only(left: ScreenUtil.getInstance().getWidth(15),
+          right: ScreenUtil.getInstance().getWidth(15)),
+      margin: EdgeInsets.only(bottom: ScreenUtil.getInstance().getWidth(15)),
+      height: ScreenUtil.getInstance().getWidth(50),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SimpleImageButton(normalImage: "images/videowindow_icon_volume_onnull.png",
+              onPressed:
+              clickVoiceBtn, width: ScreenUtil.getInstance().getWidth(24),
+              height: ScreenUtil.getInstance().getWidth(24)),
+          Spacer(),
+          SizedBox(
+            width: ScreenUtil.getInstance().getWidth(200),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SimpleImageButton(normalImage: "images/videowindow_icon_backwardnull.png",
+                    onPressed:
+                    clickPlayRollBack, width: ScreenUtil.getInstance().getWidth(24),
+                    height: ScreenUtil.getInstance().getWidth(24)),
+                SimpleImageButton(normalImage: "images/videowindow_icon_play.png",
+                    onPressed:
+                    clickPlayBtn, width: ScreenUtil.getInstance().getWidth(50),
+                    height: ScreenUtil.getInstance().getWidth(50)),
+                SimpleImageButton(normalImage: "images/playback_icon_fastx1_nor.png",
+                    onPressed:
+                    clickPlayFastSpeed, width: ScreenUtil.getInstance().getWidth(24),
+                    height: ScreenUtil.getInstance().getWidth(24)),
+              ],
+
+            ),
+          ),
+          Spacer(),
+          SimpleImageButton(normalImage: "images/videowindow_icon_fullscreennull.png",
+              onPressed:
+              clickShare, width: ScreenUtil.getInstance().getWidth(24),
+              height: ScreenUtil.getInstance().getWidth(24)),
+        ],
+      ),
+    );
+  }
+
 
   ///点击back按钮
   clickBack(){
@@ -156,5 +204,25 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
   ///分享按钮
   clickShare(){
     Fluttertoast.showToast(msg: "clickShare");
+  }
+
+  clickVoiceBtn(){
+
+  }
+
+  clickOrientionBtn(){
+
+  }
+
+  clickPlayBtn(){
+
+  }
+
+  clickPlayFastSpeed(){
+
+  }
+
+  clickPlayRollBack(){
+
   }
 }
