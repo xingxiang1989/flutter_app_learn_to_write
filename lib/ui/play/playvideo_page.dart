@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutterapplearntowrite/color/YColors.dart';
 import 'package:flutterapplearntowrite/ui/base2/base_page.dart';
 import 'package:flutterapplearntowrite/ui/base2/base_state.dart';
+import 'package:flutterapplearntowrite/ui/play/controller_model_widget.dart';
+import 'package:flutterapplearntowrite/ui/play/video_player_slider.dart';
 import 'package:flutterapplearntowrite/util/LogUtils.dart';
 import 'package:flutterapplearntowrite/widget/image_button.dart';
 import 'package:flutterapplearntowrite/widget/myText.dart';
@@ -33,21 +35,30 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
     screenHeight = ScreenUtil.getInstance().screenHeight;
 
     _controller = VideoPlayerController.asset("videos/video.mp4")
-      ..addListener(() {
-        LogUtils.d(
-            TAG,
-            "controller isInitialized = ${_controller.value.isInitialized} "
-            ", _initOk = $_initOk, isBuffering = ${_controller.value
-                .isBuffering}, isplaying = ${_controller.value.isPlaying}");
-        if (_controller.value.isInitialized && !_initOk) {
-          LogUtils.d(TAG, "初始化成功，开始自动播放");
-          _controller.play();
-          setState(() {
-            _initOk = true;
-          });
-        }
-      })
+      ..addListener(_videoListener)
       ..initialize().then((value) => setState(() {}));
+  }
+
+  void _videoListener() async{
+    LogUtils.d(
+        TAG,
+        "controller isInitialized = ${_controller.value.isInitialized} "
+            ", _initOk = $_initOk, isBuffering = ${_controller.value
+            .isBuffering}, isplaying = ${_controller.value.isPlaying}");
+    if (_controller.value.isInitialized && !_initOk) {
+      LogUtils.d(TAG, "初始化成功，开始自动播放");
+      _controller.play();
+      setState(() {
+        _initOk = true;
+      });
+    }
+  }
+
+
+  @override
+  void didUpdateWidget(PlayVideoPage oldWidget) {
+    print("didUpdateWidget");
+
   }
 
   @override
@@ -61,21 +72,24 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
     return MaterialApp(
       title: 'Video Demo',
       home: Scaffold(
-        body: Container(
-          margin: EdgeInsets.only(top:ScreenUtil.getInstance().statusBarHeight),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  AspectRatio(
-                    aspectRatio: aspectRatio,
-                    child: _initOk ? VideoPlayer(_controller) : loadingPage(),
-                  ),
-                  Visibility(child: operationView(), visible: _initOk,)
-                ],
-              ),
-            ],
+        body: ControllerModelWidget(
+          controller: _controller,
+          child: Container(
+            margin: EdgeInsets.only(top:ScreenUtil.getInstance().statusBarHeight),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    AspectRatio(
+                      aspectRatio: aspectRatio,
+                      child: _initOk ? VideoPlayer(_controller) : loadingPage(),
+                    ),
+                    Visibility(child: operationView(), visible: _initOk,)
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -117,7 +131,8 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
             children: [
               toolbarView(),
               Spacer(),
-              bottomPlayOpView()
+              bottomPlayOpView(),
+              VideoPlayerSlider()
             ],
           ),
         ),
@@ -153,7 +168,7 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
     return Container(
       padding: EdgeInsets.only(left: ScreenUtil.getInstance().getWidth(15),
           right: ScreenUtil.getInstance().getWidth(15)),
-      margin: EdgeInsets.only(bottom: ScreenUtil.getInstance().getWidth(15)),
+      margin: EdgeInsets.only(bottom: ScreenUtil.getInstance().getWidth(0)),
       height: ScreenUtil.getInstance().getWidth(50),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
