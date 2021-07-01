@@ -1,5 +1,6 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapplearntowrite/ui/play/bean/video_model.dart';
 import 'package:flutterapplearntowrite/ui/play/controller_model_widget.dart';
 import 'package:flutterapplearntowrite/util/LogUtils.dart';
 import 'package:video_player/video_player.dart';
@@ -14,18 +15,16 @@ class VideoPlayerSlider extends StatefulWidget {
   State<StatefulWidget> createState() {
     return VideoPlayerSliderState();
   }
-
-
 }
 
 class VideoPlayerSliderState extends State<VideoPlayerSlider> {
   String TAG = "VideoPlayerSliderState";
   double progressValue;
   String labelProgress;
+  bool isDragIng = false;
 
   VideoPlayerController get controller =>
       ControllerModelWidget.of(context).controller;
-
 
   @override
   void initState() {
@@ -37,29 +36,32 @@ class VideoPlayerSliderState extends State<VideoPlayerSlider> {
   @override
   void didUpdateWidget(VideoPlayerSlider oldWidget) {
     super.didUpdateWidget(oldWidget);
-    LogUtils.d(TAG, "didUpdateWidget--->");
-    int position = controller.value.position.inMilliseconds;
-    int duration = controller.value.duration.inMilliseconds;
-    if(position>=duration){
-      position=duration;
-    }
-    setState(() {
+    LogUtils.d(TAG, "didUpdateWidget--->,, isDragIng = $isDragIng");
+    if(!isDragIng){
+      int position = controller.value.position.inMilliseconds;
+      int duration = controller.value.duration.inMilliseconds;
+      if (position >= duration) {
+        position = duration;
+      }
+
       progressValue = position / duration * 100;
       labelProgress = DateUtil.formatDateMs(
         progressValue.toInt(),
         format: 'mm:ss',
       );
-    });
+    }
   }
 
   ///刚开始点击
   void _onChangedStart(double value) {
-    LogUtils.d(TAG, "_onChangedStart $value");
+    isDragIng = true;
+    LogUtils.d(TAG, "_onChangedStart $value, isDragIng = $isDragIng");
   }
 
   ///滑动或者点击结束，已松手
   void _onChangedEnd(double value) {
-    LogUtils.d(TAG, "_onChangedEnd $value");
+    isDragIng = false;
+    LogUtils.d(TAG, "_onChangedEnd $value, isDragIng = $isDragIng");
 
     int duration = controller.value.duration.inMilliseconds;
     controller.seekTo(Duration(milliseconds: (value / 100 * duration).toInt()));
@@ -67,7 +69,6 @@ class VideoPlayerSliderState extends State<VideoPlayerSlider> {
 
   ///正在滑动或者点击，未松手
   void _onChangedListener(double value) {
-
     int duration = controller.value.duration.inMilliseconds;
     LogUtils.d(TAG, "_onChangedListener duration = $duration , value = $value");
 
@@ -82,8 +83,9 @@ class VideoPlayerSliderState extends State<VideoPlayerSlider> {
 
   @override
   Widget build(BuildContext context) {
+    LogUtils.d(TAG, "build -->");
     return SliderTheme(
-      //自定义风格
+        //自定义风格
         data: SliderTheme.of(context).copyWith(
           //进度条滑块左边颜色
           inactiveTrackColor: Colors.white,
