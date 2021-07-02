@@ -7,6 +7,8 @@ import 'package:flutterapplearntowrite/ui/play/bean/video_model.dart';
 import 'package:flutterapplearntowrite/ui/play/controller_model_widget.dart';
 import 'package:flutterapplearntowrite/ui/play/video_player_slider.dart';
 import 'package:flutterapplearntowrite/util/LogUtils.dart';
+import 'package:flutterapplearntowrite/util/function_util.dart';
+import 'package:flutterapplearntowrite/widget/dialog/show_sheet_dialog.dart';
 import 'package:flutterapplearntowrite/widget/image_button.dart';
 import 'package:flutterapplearntowrite/widget/myText.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -255,7 +257,15 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
 
   clickPlayBtn() {}
 
-  clickPlayFastSpeed() {}
+  clickPlayFastSpeed() {
+    FunctionUtil.bottomSheetDialog(context, ShowSheetDialog(
+      title: "title",
+      items: ["16倍","8倍","4倍","正常播放"],
+      onTap: (int index){
+        Fluttertoast.showToast(msg: "index = $index");
+      },
+    ));
+  }
 
   clickPlayRollBack() {}
 }
