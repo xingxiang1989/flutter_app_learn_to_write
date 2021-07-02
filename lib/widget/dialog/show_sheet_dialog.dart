@@ -18,7 +18,11 @@ class _ShowSheetDialogState extends State<ShowSheetDialog> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: YColors.white,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight:
+          Radius.circular(10)),
+        color: YColors.white
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,

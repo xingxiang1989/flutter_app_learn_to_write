@@ -4,11 +4,14 @@ import 'package:flutterapplearntowrite/widget/dialog/show_sheet_dialog.dart';
 class FunctionUtil {
   static void bottomSheetDialog(BuildContext context, Widget widget) {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return widget;
-        },
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10))));
+      context: context,
+      backgroundColor: Colors.transparent,
+      // shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.only(
+      //         topLeft: Radius.circular(10), topRight: Radius.circular(10))),
+      builder: (context) {
+        return widget;
+      },
+    );
   }
 }
