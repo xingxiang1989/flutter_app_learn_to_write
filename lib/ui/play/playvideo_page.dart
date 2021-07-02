@@ -8,6 +8,7 @@ import 'package:flutterapplearntowrite/ui/play/controller_model_widget.dart';
 import 'package:flutterapplearntowrite/ui/play/video_player_slider.dart';
 import 'package:flutterapplearntowrite/util/LogUtils.dart';
 import 'package:flutterapplearntowrite/util/function_util.dart';
+import 'package:flutterapplearntowrite/widget/dialog/show_alert_dialog.dart';
 import 'package:flutterapplearntowrite/widget/dialog/show_sheet_dialog.dart';
 import 'package:flutterapplearntowrite/widget/image_button.dart';
 import 'package:flutterapplearntowrite/widget/myText.dart';
@@ -248,7 +249,10 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
 
   ///分享按钮
   clickShare() {
-    Fluttertoast.showToast(msg: "clickShare");
+    FunctionUtil.popDialog(context, ShowAlertDialog(items: ["取消","确定"],
+      content: "分享给你的好友，你会得到相应的奖励?",onTap: (index){
+        Fluttertoast.showToast(msg: "index = $index");
+      },));
   }
 
   clickVoiceBtn() {}

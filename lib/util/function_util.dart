@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:flutter/material.dart';
 import 'package:flutterapplearntowrite/widget/dialog/show_sheet_dialog.dart';
 
 class FunctionUtil {
@@ -6,12 +8,18 @@ class FunctionUtil {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      // shape: RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.only(
-      //         topLeft: Radius.circular(10), topRight: Radius.circular(10))),
       builder: (context) {
         return widget;
       },
     );
+  }
+
+  static void popDialog(BuildContext context, Widget widget) {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return widget;
+        });
   }
 }

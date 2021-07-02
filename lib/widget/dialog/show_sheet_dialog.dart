@@ -17,58 +17,60 @@ class ShowSheetDialog extends StatefulWidget {
 class _ShowSheetDialogState extends State<ShowSheetDialog> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight:
-          Radius.circular(10)),
-        color: YColors.white
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          (widget.title != null && widget.title.length > 0
-              ? Container(
-                  child: Text(
-                    widget.title,
-                    style: TextStyle(fontSize: 18, color: YColors.black),
-                  ),
-                  alignment: Alignment.center,
-                  height: ScreenUtil.getInstance().getHeight(60),
-                  decoration: BoxDecoration(
-                      border: BorderDirectional(
-                          bottom: BorderSide(
-                    color: YColors.black40,
-                  ))),
-                )
-              : Container()),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: widget.items.map((title) {
-              int index = widget.items.indexOf(title);
-              return GestureDetector(
-                onTap: (){
-                  widget.onTap(index);
-                  Navigator.pop(context);
-                },
-                child: _itemCreate(title),
-              );
-            }).toList(),
-          ),
-          SizedBox(
-            height: ScreenUtil.getInstance().getHeight(20),
-            child: Container(
-              color: YColors.black40,
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight:
+            Radius.circular(10)),
+          color: YColors.white
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            (widget.title != null && widget.title.length > 0
+                ? Container(
+                    child: Text(
+                      widget.title,
+                      style: TextStyle(fontSize: 18, color: YColors.black),
+                    ),
+                    alignment: Alignment.center,
+                    height: ScreenUtil.getInstance().getHeight(60),
+                    decoration: BoxDecoration(
+                        border: BorderDirectional(
+                            bottom: BorderSide(
+                      color: YColors.black40,
+                    ))),
+                  )
+                : Container()),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: widget.items.map((title) {
+                int index = widget.items.indexOf(title);
+                return GestureDetector(
+                  onTap: (){
+                    widget.onTap(index);
+                    Navigator.pop(context);
+                  },
+                  child: _itemCreate(title),
+                );
+              }).toList(),
             ),
-          ),
-          GestureDetector(
-            onTap: (){
-              Navigator.pop(context);
-            },
-            child: _itemCreate("取消"),
-          )
-        ],
+            SizedBox(
+              height: ScreenUtil.getInstance().getHeight(20),
+              child: Container(
+                color: YColors.black40,
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+                Navigator.pop(context);
+              },
+              child: _itemCreate("取消"),
+            )
+          ],
+        ),
       ),
     );
   }
