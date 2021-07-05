@@ -4,6 +4,7 @@ import 'package:flutterapplearntowrite/color/YColors.dart';
 import 'package:flutterapplearntowrite/ui/base2/base_page.dart';
 import 'package:flutterapplearntowrite/ui/base2/base_state.dart';
 import 'package:flutterapplearntowrite/ui/play/bean/video_model.dart';
+import 'package:flutterapplearntowrite/ui/play/bean/video_model_state.dart';
 import 'package:flutterapplearntowrite/ui/play/controller_model_widget.dart';
 import 'package:flutterapplearntowrite/ui/play/video_player_slider.dart';
 import 'package:flutterapplearntowrite/util/LogUtils.dart';
@@ -35,12 +36,16 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
       ".com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4";
 
   VideoModel _videoModel;
+  VideoModelState _videoModelState;
+
+  List<double> speedArray = [16,8,4,1];
 
   @override
   void onCreate() {
     screenWidth = ScreenUtil.getInstance().screenWidth;
     screenHeight = ScreenUtil.getInstance().screenHeight;
     _videoModel = VideoModel();
+    _videoModelState
 
     _controller = VideoPlayerController.asset("videos/video.mp4")
       ..addListener(_videoListener)
@@ -71,6 +76,7 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
 
   @override
   void onDestroy() {
+    _controller.removeListener(_videoListener);
     _controller.dispose();
   }
 
@@ -266,7 +272,9 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
       title: "title",
       items: ["16倍","8倍","4倍","正常播放"],
       onTap: (int index){
-        Fluttertoast.showToast(msg: "index = $index");
+        if(_controller.value.playbackSpeed != speedArray[index]){
+          _controller.setPlaybackSpeed(speedArray[index]);
+        }
       },
     ));
   }

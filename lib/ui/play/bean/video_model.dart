@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+///进度条刷新
 class VideoModel with ChangeNotifier{
   int totalDuration;
   int currentDuration;
