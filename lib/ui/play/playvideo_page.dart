@@ -1,5 +1,6 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutterapplearntowrite/color/YColors.dart';
 import 'package:flutterapplearntowrite/ui/base2/base_page.dart';
 import 'package:flutterapplearntowrite/ui/base2/base_state.dart';
@@ -13,6 +14,7 @@ import 'package:flutterapplearntowrite/widget/dialog/show_sheet_dialog.dart';
 import 'package:flutterapplearntowrite/widget/image_button.dart';
 import 'package:flutterapplearntowrite/widget/myText.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:orientation/orientation.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -36,8 +38,13 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
 
   VideoModel _videoModel;
 
+
+  bool get _isFullScreen => MediaQuery.of(context).orientation == Orientation
+      .landscape;
+
   @override
   void onCreate() {
+    LogUtils.d(TAG, "initState onCreate()");
     screenWidth = ScreenUtil.getInstance().screenWidth;
     screenHeight = ScreenUtil.getInstance().screenHeight;
     _videoModel = VideoModel();
@@ -76,7 +83,6 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
 
   @override
   Widget pageBody(BuildContext context) {
-    LogUtils.d(TAG, "pageBody aspectRatio = ${_controller.value.aspectRatio}");
     return MaterialApp(
       title: 'Video Demo',
       home: Scaffold(
@@ -137,9 +143,12 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
 
   ///上层操作view
   Widget operationView() {
-    LogUtils.d(TAG, "operationView  refresh");
+    LogUtils.d(TAG, "operationView  refresh _isFullScreen = ${_isFullScreen},"
+        " screenHeight = $screenHeight, screenWidth = $screenWidth");
     return Container(
       color: YColors.blue40,
+      height: _isFullScreen ? screenHeight :
+      screenWidth / aspectRatio,
       child: AspectRatio(
         aspectRatio: aspectRatio,
         child: Visibility(
@@ -165,17 +174,17 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
     return Container(
       color: YColors.black40,
       padding: EdgeInsets.only(
-          left: ScreenUtil.getInstance().getWidth(15),
-          right: ScreenUtil.getInstance().getWidth(15)),
-      height: ScreenUtil.getInstance().getWidth(50),
+          left: ScreenUtil.getInstance().getAdapterSize(15),
+          right: ScreenUtil.getInstance().getAdapterSize(15)),
+      height: ScreenUtil.getInstance().getAdapterSize(50),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SimpleImageButton(
               normalImage: "images/icon_white_back.png",
               onPressed: clickBack,
-              width: ScreenUtil.getInstance().getWidth(24),
-              height: ScreenUtil.getInstance().getWidth(24)),
+              width: ScreenUtil.getInstance().getAdapterSize(24),
+              height: ScreenUtil.getInstance().getAdapterSize(24)),
           Text(
             "C3WN",
             style: TextStyle(color: YColors.white, fontSize: 16),
@@ -184,8 +193,8 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
           SimpleImageButton(
               normalImage: "images/videowindow_icon_share.png",
               onPressed: clickShare,
-              width: ScreenUtil.getInstance().getWidth(24),
-              height: ScreenUtil.getInstance().getWidth(24)),
+              width: ScreenUtil.getInstance().getAdapterSize(24),
+              height: ScreenUtil.getInstance().getAdapterSize(24)),
         ],
       ),
     );
@@ -194,21 +203,21 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
   Widget bottomPlayOpView() {
     return Container(
       padding: EdgeInsets.only(
-          left: ScreenUtil.getInstance().getWidth(15),
-          right: ScreenUtil.getInstance().getWidth(15)),
-      margin: EdgeInsets.only(bottom: ScreenUtil.getInstance().getWidth(0)),
-      height: ScreenUtil.getInstance().getWidth(50),
+          left: ScreenUtil.getInstance().getAdapterSize(15),
+          right: ScreenUtil.getInstance().getAdapterSize(15)),
+      margin: EdgeInsets.only(bottom: ScreenUtil.getInstance().getAdapterSize(0)),
+      height: ScreenUtil.getInstance().getAdapterSize(50),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SimpleImageButton(
               normalImage: "images/videowindow_icon_volume_onnull.png",
               onPressed: clickVoiceBtn,
-              width: ScreenUtil.getInstance().getWidth(24),
-              height: ScreenUtil.getInstance().getWidth(24)),
+              width: ScreenUtil.getInstance().getAdapterSize(24),
+              height: ScreenUtil.getInstance().getAdapterSize(24)),
           Spacer(),
           SizedBox(
-            width: ScreenUtil.getInstance().getWidth(200),
+            width: ScreenUtil.getInstance().getAdapterSize(200),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -216,27 +225,27 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
                 SimpleImageButton(
                     normalImage: "images/videowindow_icon_backwardnull.png",
                     onPressed: clickPlayRollBack,
-                    width: ScreenUtil.getInstance().getWidth(24),
-                    height: ScreenUtil.getInstance().getWidth(24)),
+                    width: ScreenUtil.getInstance().getAdapterSize(24),
+                    height: ScreenUtil.getInstance().getAdapterSize(24)),
                 SimpleImageButton(
                     normalImage: "images/videowindow_icon_play.png",
                     onPressed: clickPlayBtn,
-                    width: ScreenUtil.getInstance().getWidth(50),
-                    height: ScreenUtil.getInstance().getWidth(50)),
+                    width: ScreenUtil.getInstance().getAdapterSize(50),
+                    height: ScreenUtil.getInstance().getAdapterSize(50)),
                 SimpleImageButton(
                     normalImage: "images/playback_icon_fastx1_nor.png",
                     onPressed: clickPlayFastSpeed,
-                    width: ScreenUtil.getInstance().getWidth(24),
-                    height: ScreenUtil.getInstance().getWidth(24)),
+                    width: ScreenUtil.getInstance().getAdapterSize(24),
+                    height: ScreenUtil.getInstance().getAdapterSize(24)),
               ],
             ),
           ),
           Spacer(),
           SimpleImageButton(
               normalImage: "images/videowindow_icon_fullscreennull.png",
-              onPressed: clickShare,
-              width: ScreenUtil.getInstance().getWidth(24),
-              height: ScreenUtil.getInstance().getWidth(24)),
+              onPressed: _toggleFullScreen,
+              width: ScreenUtil.getInstance().getAdapterSize(24),
+              height: ScreenUtil.getInstance().getAdapterSize(24)),
         ],
       ),
     );
@@ -244,7 +253,13 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
 
   ///点击back按钮
   clickBack() {
-    finish();
+    setState(() {
+      if(_isFullScreen){
+        OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
+      }else{
+        finish();
+      }
+    });
   }
 
   ///分享按钮
@@ -257,7 +272,15 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
 
   clickVoiceBtn() {}
 
-  clickOrientionBtn() {}
+  _toggleFullScreen() {
+    setState(() {
+      if (_isFullScreen) { // 如果是全屏就切换竖屏
+        OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
+      } else {
+        OrientationPlugin.forceOrientation(DeviceOrientation.landscapeRight);
+      }
+    });
+  }
 
   clickPlayBtn() {}
 
