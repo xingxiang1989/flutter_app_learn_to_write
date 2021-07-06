@@ -1,15 +1,15 @@
 import 'package:flutter/foundation.dart';
 
 class VideoModelState with ChangeNotifier {
-  double speed;
+  double speedIndex;
   bool isPlaying;
   bool isMute;
 
   VideoModelState(
-      {this.isPlaying = false, this.speed = 1, this.isMute = false});
+      {this.isPlaying = false, this.speedIndex = 3, this.isMute = false});
 
-  updateSpeed(double _speed){
-    speed = _speed;
+  updateSpeed(double _speedIndex){
+    speedIndex = _speedIndex;
     notifyListeners();
   }
 

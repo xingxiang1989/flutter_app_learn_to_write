@@ -41,7 +41,10 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
   VideoModelState _videoModelState;
 
   List<double> speedArray = [16,8,4,1];
-
+  List<String> speedPicArray = ["images/playback_icon_fastx16_nor.png",
+  "images/playback_icon_fastx8_nor.png",
+  "images/playback_icon_fastx4_nor.png",
+  "images/playback_icon_fastx1_nor.png"];
 
   bool get _isFullScreen => MediaQuery.of(context).orientation == Orientation
       .landscape;
@@ -52,7 +55,7 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
     screenWidth = ScreenUtil.getInstance().screenWidth;
     screenHeight = ScreenUtil.getInstance().screenHeight;
     _videoModel = VideoModel();
-    _videoModelState
+    _videoModelState = VideoModelState();
 
     _controller = VideoPlayerController.asset("videos/video.mp4")
       ..addListener(_videoListener)
@@ -94,8 +97,11 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
       home: Scaffold(
         body: ControllerModelWidget(
           controller: _controller,
-          child: ChangeNotifierProvider(
-            create: (context) => _videoModel,
+          child: MultiProvider(
+            providers: [
+              ChangeNotifierProvider<VideoModel>(create: (context) => _videoModel),
+              ChangeNotifierProvider<VideoModelState>(create: (context) => _videoModelState),
+            ],
             child: Container(
               margin: EdgeInsets.only(
                   top: ScreenUtil.getInstance().statusBarHeight),
@@ -163,7 +169,11 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
             children: [
               toolbarView(),
               Spacer(),
-              bottomPlayOpView(),
+              Consumer(builder: (BuildContext context, VideoModelState value, Widget
+              child){
+                LogUtils.d(TAG, "operationView bottomPlayOpView refresh");
+                return bottomPlayOpView();
+              }),
               Consumer(builder:
                   (BuildContext context, VideoModel value, Widget child) {
                 LogUtils.d(TAG, "operationView VideoPlayerSlider refresh");
@@ -206,6 +216,7 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
     );
   }
 
+  ///底部控件操作按钮
   Widget bottomPlayOpView() {
     return Container(
       padding: EdgeInsets.only(
@@ -239,7 +250,7 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
                     width: ScreenUtil.getInstance().getAdapterSize(50),
                     height: ScreenUtil.getInstance().getAdapterSize(50)),
                 SimpleImageButton(
-                    normalImage: "images/playback_icon_fastx1_nor.png",
+                    normalImage: speedPicArray[_videoModelState.speedIndex.toInt()],
                     onPressed: clickPlayFastSpeed,
                     width: ScreenUtil.getInstance().getAdapterSize(24),
                     height: ScreenUtil.getInstance().getAdapterSize(24)),
@@ -297,6 +308,7 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
       onTap: (int index){
         if(_controller.value.playbackSpeed != speedArray[index]){
           _controller.setPlaybackSpeed(speedArray[index]);
+          _videoModelState.updateSpeed(index.toDouble());
         }
       },
     ));
