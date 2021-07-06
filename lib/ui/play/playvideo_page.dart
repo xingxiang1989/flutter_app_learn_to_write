@@ -228,7 +228,9 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SimpleImageButton(
-              normalImage: "images/videowindow_icon_volume_onnull.png",
+              normalImage: _controller.value
+                  .volume > 0? "images/videowindow_icon_volume_onnull.png":
+                  "images/videowindow_icon_volume_offnull.png",
               onPressed: clickVoiceBtn,
               width: ScreenUtil.getInstance().getAdapterSize(24),
               height: ScreenUtil.getInstance().getAdapterSize(24)),
@@ -245,7 +247,8 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
                     width: ScreenUtil.getInstance().getAdapterSize(24),
                     height: ScreenUtil.getInstance().getAdapterSize(24)),
                 SimpleImageButton(
-                    normalImage: "images/videowindow_icon_play.png",
+                    normalImage: _controller.value.isPlaying ?
+                    "images/playback_icon_stop_nor.png" : "images/videowindow_icon_play.png",
                     onPressed: clickPlayBtn,
                     width: ScreenUtil.getInstance().getAdapterSize(50),
                     height: ScreenUtil.getInstance().getAdapterSize(50)),
@@ -287,8 +290,18 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
       },));
   }
 
-  clickVoiceBtn() {}
+  ///声音切换
+  clickVoiceBtn() {
+    if(_controller.value.volume > 0){
+      _controller.setVolume(0.0);
+      _videoModelState.updateMute(true);
+    }else{
+      _controller.setVolume(1.0);
+      _videoModelState.updateMute(false);
+    }
+  }
 
+  ///横竖屏切换
   _toggleFullScreen() {
     setState(() {
       if (_isFullScreen) { // 如果是全屏就切换竖屏
@@ -299,7 +312,16 @@ class PlayVideoPageState extends BaseState<PlayVideoPage> {
     });
   }
 
-  clickPlayBtn() {}
+  ///暂停，开始播放
+  clickPlayBtn() {
+    if(_controller.value.isPlaying){
+      _controller.pause();
+      _videoModelState.updatePlaying(false);
+    }else{
+      _controller.play();
+      _videoModelState.updatePlaying(true);
+    }
+  }
 
   clickPlayFastSpeed() {
     FunctionUtil.bottomSheetDialog(context, ShowSheetDialog(
