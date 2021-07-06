@@ -28,8 +28,8 @@ class ShowAlertDialog extends StatefulWidget {
 class _ShowAlertDialogState extends State<ShowAlertDialog> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: YColors.bg1,
+    return Material(
+      type: MaterialType.transparency,
       child: Center(
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
@@ -59,7 +59,7 @@ class _ShowAlertDialogState extends State<ShowAlertDialog> {
                       right: ScreenUtil.getInstance().getHeight(20)),
                   decoration: BoxDecoration(
                       border: Border(
-                          bottom: BorderSide(color: YColors.black, width: 1))),
+                          bottom: BorderSide(color: YColors.black, width:0.5))),
                   child: Text(
                     widget.content,
                     textAlign: widget.contentAlign,
@@ -117,10 +117,12 @@ class _ShowAlertDialogState extends State<ShowAlertDialog> {
                   Navigator.pop(context);
                 },
               )),
-          VerticalDivider(
-            width:1,
-            color: YColors.black,
-          ),
+          // VerticalDivider(
+          //   width:ScreenUtil.getInstance().getWidth(3),
+          //   color: YColors.black,
+          // ),
+          SizedBox(width: 0.5,height: 50,
+          child: Container(color: Colors.black,),),
           Expanded(
               flex: 1,
               child: GestureDetector(
